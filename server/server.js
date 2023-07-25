@@ -32,7 +32,7 @@ app.use(cookieParser())
 
 
 app.use('/api/user',user)
-// app.use('/api/comment',comment)
+app.use('/api/comment',comment)
 app.use('/api/video',video)
 
 

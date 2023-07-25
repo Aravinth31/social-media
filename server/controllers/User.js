@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Video = require('../models/Video');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -113,9 +114,6 @@ const  getUser= async (req,res) => {
 }
 
 const subscribe = async (req,res) => {
-    console.log("req.user.id  : "+req.user.id)
-    console.log("req.params.id  : "+req.params.id)
-
     try{
         await User.findByIdAndUpdate(req.user.id, { $push : { subscribedUsers : req.params.id}})
         await User.findByIdAndUpdate(req.params.id, { $inc : { subscribers : 1}})
@@ -140,11 +138,25 @@ const unsubscribe = async (req,res) => {
 }
 
 const like = async (req,res) => {
-    res.json({ status : true, message : "Google Signin Successfull"})
+    try{
+        await Video.findByIdAndUpdate(req.params.videoId , { $addToSet : {likes : req.user.id} , $pull : {dislikes : req.user.id}});
+        res.status(200).json({ status : true, message : "Video Liked Successfully"});
+    }
+    catch(err)
+    {
+        return res.status(404).json({ status : false, message : err});
+    }
 }
 
 const dislike = async (req,res) => {
-    res.json({ status : true, message : "Google Signin Successfull"})
+    try{
+        await Video.findByIdAndUpdate(req.params.videoId , { $addToSet : {dislikes : req.user.id} , $pull : {likes : req.user.id}});
+        res.status(200).json({ status : true, message : "Video disliked Successfully"});
+    }
+    catch(err)
+    {
+        return res.status(404).json({ status : false, message : err});
+    }
 }
 
 
