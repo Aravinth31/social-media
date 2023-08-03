@@ -29,15 +29,15 @@ import FeedbackIcon from '@mui/icons-material/Feedback';
 const LeftNavBar = () => {
   return (
     <div className='p-2 h-[100vh] text-[#080808] w-[300px]'>
-      <div className='flex h-[7vh] justify-around items-center text-l'>
+      <div className='flex h-[65px] justify-around items-center text-[20px] '>
           <MenuIcon/>
         <div className='flex gap-x-1'>
-          <p className='text-[#f82626]'><YouTubeIcon/></p>
-          <p className=''>YouTube</p>
+          <p className='text-[#f82626] scale-[1.3]'><YouTubeIcon/></p>
+          <p className='pr-10'>YouTube</p>
         </div>
       </div>
       
-      <div className='overflow-y-scroll h-[93vh] text-[15px]'>
+      <div className='overflow-y-scroll scroll-bar h-[92vh] text-[15px]'>
 
         <div className='block pb-4 h-[auto] border-b-2 border-[#e4e3e3]'>
           <div className='flex bg-[#ffffff] p-2 gap-x-2 hover:bg-[#f2f2f2] hover:rounded-[15px] hover:text-sky-700'>

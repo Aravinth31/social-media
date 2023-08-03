@@ -7,7 +7,7 @@ const Container = () => {
   return (
     <div className='flex'>
         <LeftNavBar/>
-        <div className='bg-slate-400 text-red-600 w-full'>
+        <div className='bg-slate-400 w-full'>
             <TopBar/>
             <VideoCards/>
         </div>
