@@ -24,8 +24,22 @@ const comment = require('./routes/Comment')
 const video = require('./routes/Video')
 
 
+// Configure CORS with options
+const allowedOrigins = ['http://localhost:3000']; // Add other origins as needed
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Check if the request origin is in the allowed list or if it's undefined (e.g., from a browser)
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true); // Allow the request
+    } else {
+      callback(new Error('Not allowed by CORS')); // Block the request
+    }
+  },
+  credentials: true, // Allow credentials (cookies, authorization headers)
+};
+
 // applying middlewares cors and bodyparser 
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.use(cookieParser())
 

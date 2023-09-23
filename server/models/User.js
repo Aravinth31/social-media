@@ -26,7 +26,11 @@ const UserSchema = mongoose.Schema({
   subscribedUsers:{
     type : [String],
     default: []
-  }   
+  },
+  extraInfo:{
+    type : Object,
+    default : {}
+  }  
 },
 {
     timestamps:true
