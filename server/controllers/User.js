@@ -22,7 +22,7 @@ const signup = async (req,res) => {
         const newUser = await User.create({...req.body, password:hash})
         const {password, ...others} = newUser._doc
         let token = generateToken(newUser._id)
-        res.cookie("access_token",token, { httpOnly:true }).status(200).json({ user:others, status : true ,message : "User Signup Successful"})
+        res.cookie("access_token",token, { httpOnly:false }).status(200).json({ user:others, status : true ,message : "User Signup Successful"})
     }
     catch(err){
         return res.status(500).json({status:false, message :err});
@@ -38,7 +38,7 @@ const signin = async (req,res) => {
         if(user && (await bcrypt.compare(password, user.password))){
             let token = generateToken(user._id)
             const {password, ...others} = user._doc
-            res.cookie("access_token",token, { httpOnly:true }).status(200).json({ user:others, status : true, message : "User Signin Successfull"})
+            res.cookie("access_token",token, { httpOnly:false }).status(200).json({ user:others, status : true, message : "User Signin Successfull"})
         }else{
             return res.status(201).send({status:false, msg : "Invalid credintials..!!"});
         }
