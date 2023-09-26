@@ -20,6 +20,10 @@ const TopBar = () => {
     localStorage.removeItem('youtube-current-user');
   }
 
+  const handleSignIn = () => {
+    localStorage.setItem('previousLocation', window.location.pathname);
+    window.location.href = '/user/signin';
+  }
 
   return (
     <div className={`fixed top-0 z-100 p-2 w-full block ${theme === "light" ? 'text-[#080808] bg-[#ffff]':'bg-[#080808] text-[#d4d0d0]'}`}>
@@ -45,8 +49,8 @@ const TopBar = () => {
 
         {!userSignedIn && 
           <div className=' flex justify-center w-2/12 pl-4 text-sky-700'>
-            <button>
-              <a href="/user/signin" className='border-2 border-sky-700 px-2 py-1 flex justify-center items-center gap-2 cursor-pointer'><AccountCircleIcon/> Sign In</a>
+            <button onClick={handleSignIn}>
+              <p className='border-2 border-sky-700 px-2 py-1 flex justify-center items-center gap-2 cursor-pointer'><AccountCircleIcon/> Sign In</p>
             </button>
           </div>
         }
