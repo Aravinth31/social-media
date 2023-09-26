@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 
 const VideoCards = () => {
-  const navigate=useNavigate()
+  const navigate=useNavigate();
   const videos = ["video 1", "video 2", "video 3", "video 4", "video 5", "video 6", "video 7", "video 8", "video 9", "video 10", "video 11", "video 12", "video 13", "video 14", "video 15", "video 16", "video 17", "video 18", "video 19", "video 20", "video 21", "video 22", "video 23", "video 24", "video 25", "video 26", "video 27", "video 28", "video 29", "video 30", "video 31", "video 32","video 33"];
   const {theme,setTheme}=useContext(UserDetailsContext);
 
   return (
-    <div className={`h-[91vh] left-[300px] p-4 pl-8 p-2 flex flex-row flex-wrap gap-x-10 gap-y-16 overflow-y-scroll scroll-bar w-[1620px] float-right ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>
+    <div className={`h-[91.5vh] left-[300px] p-4 pl-8 p-2 flex flex-row flex-wrap gap-x-10 gap-y-16 overflow-y-scroll scroll-bar w-[1620px] float-right ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>
       {
         videos.map( (values)=> {
 
          return ( 
-         <div className='w-[340px] h-[280px] bg-[#eeeaea] rounded-[10px]' onClick={()=> navigate("/video")}>
+         <div className='w-[340px] h-[280px] bg-[#eeeaea] rounded-[10px] cursor-pointer' onClick={()=> navigate("/video")}>
             <div className='w-full h-[60%] rounded-[10px] block hover:opacity-50'>
               {/* {values} */}
               <img src="https://img.freepik.com/premium-psd/business-youtube-thumbnail-design-template_475351-263.jpg?w=2000" alt={values} className='w-full h-full rounded-[10px]'/>

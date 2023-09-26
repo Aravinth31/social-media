@@ -13,10 +13,10 @@ dotenv.config()
 mongoose.connect(process.env.mango,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Database connected successfully..!!")
-    }).catch((err) => {
-        throw err
     })
-
+    .catch((error) => {
+      console.error('Error connecting to MongoDB:', error);
+    });
 
 // all routes
 const user = require('./routes/User')
@@ -25,7 +25,7 @@ const video = require('./routes/Video')
 
 
 // Configure CORS with options
-const allowedOrigins = ['http://localhost:3000']; // Add other origins as needed
+const allowedOrigins = ['http://localhost:3001', 'http://localhost:3000']; // Add other origins as needed
 const corsOptions = {
   origin: (origin, callback) => {
     // Check if the request origin is in the allowed list or if it's undefined (e.g., from a browser)

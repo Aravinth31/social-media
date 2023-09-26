@@ -5,16 +5,11 @@ const jwt = require('jsonwebtoken')
 
 const signup = async (req,res) => {
     try{
-        const {email,name} = req.body
+        const {email} = req.body
         const userEmailExists = await User.findOne({email});
         if(userEmailExists)
         {
             return res.status(400).json({status:false, message :"User Email Already Exists"});
-        }
-        const userNameExists = await User.findOne({name});
-        if(userNameExists)
-        {
-            return res.status(400).json({status:false, message :"User Name Already Exists"});
         }
 
         const salt = bcrypt.genSaltSync(10)
@@ -32,8 +27,8 @@ const signup = async (req,res) => {
 
 const signin = async (req,res) => {    
     try{
-        const {name, password} = req.body
-        const user = await User.findOne({name});
+        const {email, password} = req.body
+        const user = await User.findOne({email});
 
         if(user && (await bcrypt.compare(password, user.password))){
             let token = generateToken(user._id)

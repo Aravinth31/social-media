@@ -6,10 +6,41 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import { UserDetailsContext } from '../context/UserContext';
 
 const VideoPreview = () => {
-  const {theme,setTheme}=useContext(UserDetailsContext);
+  const {userDetails,setUserDetails,theme,setTheme,userSignedIn,setUserSignedIn}=useContext(UserDetailsContext);
+
+  const handleVideoLike = () => {
+    localStorage.setItem('previousLocation', window.location.pathname);
+    if(userSignedIn){
+
+    }else{
+      window.location.href = '/user/signin';
+    }
+
+  }
+
+  const handleVideoDislike = () => {
+    localStorage.setItem('previousLocation', window.location.pathname);
+    if(userSignedIn){
+
+    }
+    else{
+      window.location.href = '/user/signin';
+    }
+  }
+
+  const handleVideoSave = () => {
+    localStorage.setItem('previousLocation', window.location.pathname);
+    if(userSignedIn){
+
+    }
+    else{
+      window.location.href = '/user/signin';
+    }
+  }
+
 
   return (
-    <div className={`flex justify-center h-[860px] overflow-y-scroll scroll-bar pt-8 ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>
+    <div className={`flex justify-center h-[864px] overflow-y-scroll scroll-bar pt-8 ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>
       <div className='w-[1100px] h-[750px] inline-block m-10 mt-0 overflow-y-scroll scroll-bar'>
           <div className='w-full h-[630px] p-2'>
             <video controls crossOrigin="anonymous" autoPlay muted loop src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" className='h-[605px] rounded-[30px] border-2 overflow-hidden'></video>
@@ -28,14 +59,14 @@ const VideoPreview = () => {
                   <p>33.7K subscribers</p>
                 </div>
               </div>
-              <div className={`flex flex-row gap-2 pr-5 ${theme === "light" ? 'text-[#080808]':'text-[#ddd9d9]'}`}>
+              <div className={`flex flex-row gap-2 pr-5 ${theme === "light" ? 'text-[#080808]':'text-[#ddd9d9]'}`} onClick={handleVideoLike}>
                 <div className={`flex flex-row w-[110px]  h-[40px] rounded-full ${theme === "light" ? 'bg-[#e9e4e4]':'bg-[#969090]'}`}>
                   <button className='flex-1 flex flex-row justify-center items-center gap-1'>
                     <ThumbUpIcon/> 
                     <p>Like</p>
                     </button>
                 </div>
-                <div className={`flex flex-row w-[110px]  h-[40px] rounded-full ${theme === "light" ? 'bg-[#e9e4e4]':'bg-[#969090]'}`}>
+                <div className={`flex flex-row w-[110px]  h-[40px] rounded-full ${theme === "light" ? 'bg-[#e9e4e4]':'bg-[#969090]'}`} onClick={handleVideoDislike}>
                   <button className='flex-1 flex flex-row justify-center items-center gap-1'>
                     <ThumbDownIcon/> 
                     <p>Dislike</p>
@@ -47,7 +78,7 @@ const VideoPreview = () => {
                     <p>Share</p>
                     </button>
                 </div>
-                <div className={`flex flex-row w-[110px]  h-[40px] rounded-full ${theme === "light" ? 'bg-[#e9e4e4]':'bg-[#969090]'}`}>
+                <div className={`flex flex-row w-[110px]  h-[40px] rounded-full ${theme === "light" ? 'bg-[#e9e4e4]':'bg-[#969090]'}`} onClick={handleVideoSave}>
                   <button className='flex-1 flex flex-row justify-center items-center gap-1'>
                     <BookmarksIcon/> 
                     <p>Save</p>

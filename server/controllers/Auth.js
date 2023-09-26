@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 
 const verifyToken = async (req,res,next) => {
-    const token = req.cookies.access_token
+    const token = req.cookies.access_token;
     if(token){
         try{
             const decode = jwt.verify(token, process.env.jwt_secret);
@@ -13,11 +13,11 @@ const verifyToken = async (req,res,next) => {
         }
         catch(err)
         {
+            res.clearCookie("access_token");
             res.status(401).json({err : "Not Authorized, Wrong Token"});
-            // res.clearCookie("access_token")
-            // res.redirect("")
         }
     }else{
+        res.clearCookie("access_token");
         return res.status(401).json({err : "Not Authorized, No Token Found"});
     }
 }
