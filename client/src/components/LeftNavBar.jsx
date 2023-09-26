@@ -26,20 +26,32 @@ const LeftNavBar = () => {
   const {userDetails,setUserDetails,theme,setTheme,userSignedIn,setUserSignedIn}=useContext(UserDetailsContext);
 
   const updateTheme = () => {
-    const newTheme = (theme === "light") ? "dark" : "light";
-    const body = {
-      "extraInfo": {
-        "theme": newTheme
+    localStorage.setItem('previousLocation', window.location.pathname);
+    if(userSignedIn){
+      const newTheme = (theme === "light") ? "dark" : "light";
+      const body = {
+        "extraInfo": {"theme": newTheme}
       }
+      Api.put(`/api/user/${userDetails._id}`, body, { withCredentials: true }).then((res)=>{
+        if(res.data.status == true){
+          setUserDetails(res.data.user);
+          setTheme(res.data.user.extraInfo.theme);
+        }
+      })
+      .catch((error) => {
+          if(error.response.status == 401){
+            window.location.href = '/user/signin';
+          }
+      });
+
+    }else{
+      window.location.href = '/user/signin';
     }
-    Api.put("/api/user/64a69d55b7797ca606b31e79", body).then((res)=>{
-      setTheme(res.data.user.extraInfo.theme)
-    });
   }
 
   return (
     <div className={`p-2 w-[300px] inline-block ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>      
-      <div className='overflow-y-scroll scroll-bar h-[89vh] text-[15px]'>
+      <div className='overflow-y-scroll scroll-bar h-[89.8vh] text-[15px]'>
 
         <div className={`block pb-4 h-[auto] cursor-pointer border-b-2 ${theme === "light" ? 'border-[#e4e3e3]':'border-[#817c7c]'}`}>
           <div className={`flex p-2 gap-x-2 hover:rounded-[15px] hover:text-sky-700 ${theme === "light" ? 'hover:bg-[#f2f2f2]':'hover:bg-[#817c7c]'}`}>
@@ -73,9 +85,8 @@ const LeftNavBar = () => {
               Sign in to like videos,comments and subscribe.
             </p>
             <div className='pl-4 text-sky-700'>
-              <button className='border-2 border-sky-700 px-2 py-1 flex justify-center items-center gap-2 cursor-pointer'>
-                <AccountCircleIcon/>
-                Sign In
+              <button>
+                <a href="/user/signin" className='border-2 border-sky-700 px-2 py-1 flex justify-center items-center gap-2 cursor-pointer'><AccountCircleIcon/> Sign In</a>
               </button>
             </div>
           </div>

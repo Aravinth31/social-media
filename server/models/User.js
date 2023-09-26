@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
   name:{
     type : String,
-    require : true,
-    unique : true
+    require : true
   },
   email:{
     type : String,
@@ -29,7 +28,7 @@ const UserSchema = mongoose.Schema({
   },
   extraInfo:{
     type : Object,
-    default : {}
+    default : {"theme":"light"}
   }  
 },
 {
