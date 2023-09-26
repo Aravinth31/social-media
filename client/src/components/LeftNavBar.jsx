@@ -49,6 +49,11 @@ const LeftNavBar = () => {
     }
   }
 
+  const handleSignIn = () => {
+    localStorage.setItem('previousLocation', window.location.pathname);
+    window.location.href = '/user/signin';
+  }
+
   return (
     <div className={`p-2 w-[300px] inline-block ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>      
       <div className='overflow-y-scroll scroll-bar h-[89.8vh] text-[15px]'>
@@ -85,8 +90,8 @@ const LeftNavBar = () => {
               Sign in to like videos,comments and subscribe.
             </p>
             <div className='pl-4 text-sky-700'>
-              <button>
-                <a href="/user/signin" className='border-2 border-sky-700 px-2 py-1 flex justify-center items-center gap-2 cursor-pointer'><AccountCircleIcon/> Sign In</a>
+              <button onClick={handleSignIn}>
+                <p className='border-2 border-sky-700 px-2 py-1 flex justify-center items-center gap-2 cursor-pointer'><AccountCircleIcon/> Sign In</p>
               </button>
             </div>
           </div>
