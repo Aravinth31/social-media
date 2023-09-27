@@ -118,7 +118,7 @@ const AddNewVideo = () => {
             }}><CloseIcon/></button>
           <div className='flex items-center justify-center text-[30px]'>
               <div className='text-[#024bf5] mt-10'>
-                  Add a New Video - {JSON.stringify(userSignedIn)} - {theme}
+                  Add a New Video
               </div>
           </div>
 
@@ -131,7 +131,7 @@ const AddNewVideo = () => {
                     <input type="text" placeholder='Video title' value={title} onChange={(e) => setTitle(e.target.value)} className='w-[500px] h-[45px] p-3 bg-[#e1d9d9]'/>
                   </div>
                   <div className='flex flex-col gap-y-3'>
-                    <label htmlFor="video title" className='text-bold text-[20px] font-mono'>Video Description</label>
+                    <label htmlFor="video title" className='text-bold text-[20px] font-mono'>Video Description<span className='text-[#f62e2e]'>*</span></label>
                     <textarea rows="4" cols="70" placeholder='Video description' value={description} onChange={(e) => setDescription(e.target.value)} className='w-[500px] h-[105px] p-3 bg-[#e1d9d9]'/>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ const AddNewVideo = () => {
               <div className='flex items-center justify-between p-10 pt-0 gap-10'>
                 <div className='flex flex-col w-[700px] gap-y-6'>
                   <div className='relative w-full h-[45px] flex items-center justify-between '>
-                    <p className='text-bold text-[20px] font-mono'>Thumbnail Image</p>
+                    <p className='text-bold text-[20px] font-mono'>Thumbnail Image<span className='text-[#f62e2e]'>*</span></p>
                     <input type="file" accept="image/*" placeholder='Video title' data-type="image" onChange={handleFileChange}/>
                     <button className={`bg-[#d6c9f0] w-[90px] h-[35px] rounded-full ${thumbnail ? '':'invisible'}`} data-type="image" onClick={handleFilePreview}>preview</button>
                   </div>
