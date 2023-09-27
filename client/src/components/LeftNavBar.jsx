@@ -34,6 +34,7 @@ const LeftNavBar = () => {
       }
       Api.put(`/api/user/${userDetails._id}`, body, { withCredentials: true }).then((res)=>{
         if(res.data.status == true){
+          localStorage.setItem('youtube-current-user', JSON.stringify(res.data.user))
           setUserDetails(res.data.user);
           setTheme(res.data.user.extraInfo.theme);
         }
@@ -59,9 +60,11 @@ const LeftNavBar = () => {
       <div className='overflow-y-scroll scroll-bar h-[89.8vh] text-[15px]'>
 
         <div className={`block pb-4 h-[auto] cursor-pointer border-b-2 ${theme === "light" ? 'border-[#e4e3e3]':'border-[#817c7c]'}`}>
-          <div className={`flex p-2 gap-x-2 hover:rounded-[15px] hover:text-sky-700 ${theme === "light" ? 'hover:bg-[#f2f2f2]':'hover:bg-[#817c7c]'}`}>
-            <p className='w-1/4 pl-2'><HomeIcon/></p>
-            <p className='w-3/4'>Home</p>
+          <div >
+            <a href="/" className={`flex p-2 gap-x-2 hover:rounded-[15px] hover:text-sky-700 ${theme === "light" ? 'hover:bg-[#f2f2f2]':'hover:bg-[#817c7c]'}`}>    
+              <p className='w-1/4 pl-2'><HomeIcon/></p>
+              <p className='w-3/4'>Home</p>
+            </a>
           </div>
           <div className={`flex p-2 gap-x-2 hover:rounded-[15px] hover:text-sky-700 ${theme === "light" ? 'hover:bg-[#f2f2f2]':'hover:bg-[#817c7c]'}`}>
             <p className='w-1/4 pl-2'><ExploreIcon/></p>

@@ -58,7 +58,7 @@ const TopBar = () => {
         {userSignedIn && 
           <div className=' flex justify-center w-2/12 pl-4 text-sky-700 gap-x-5'>
             <button className='border-2 rounded-full border-sky-700 px-2 py-1 flex justify-center items-center gap-2 cursor-pointer'>
-              <AddIcon/>
+              <a href="/video/new"><AddIcon/></a>
             </button>
 
             <button className='border-2 border-sky-700 px-2 py-1 flex justify-center items-center gap-2 cursor-pointer' onClick={handleLogOut}>
