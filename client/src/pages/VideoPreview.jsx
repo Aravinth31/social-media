@@ -6,6 +6,8 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import { UserDetailsContext } from '../context/UserContext';
 import { json, useParams } from "react-router-dom";
 import Api from './Common/Api';
+import {ShareSocial} from 'react-share-social';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const VideoPreview = () => {
@@ -14,8 +16,30 @@ const VideoPreview = () => {
   const [like, setLike] = useState([]);
   const [disLike, setDisLike] = useState([]);
   const [channelData, setChannelData] = useState({});
+  const [showShares, setShowShares] = useState(false);
   const {userDetails,setUserDetails,theme,setTheme,userSignedIn,setUserSignedIn}=useContext(UserDetailsContext);
 
+  const style = {
+    root: {
+      background: '#999999',
+      borderRadius: 3,
+      border: 0,
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      color: 'white',
+      position:'absolute',
+      top:'55vh',
+      left:'50vw'
+  
+    },
+    copyContainer: {
+      border: '1px solid blue',
+      background: 'rgb(0,0,0,0.7)'
+    },
+    title: {
+      color: 'aquamarine',
+      fontStyle: 'italic'
+    }
+  };
 
   useEffect(() => {
     console.log('useEffect called with id:', id);
@@ -155,11 +179,24 @@ const VideoPreview = () => {
                   </button>
                 </div>
                 <div className={`flex flex-row w-[110px]  h-[40px] rounded-full ${theme === "light" ? 'bg-[#e9e4e4]':'bg-[#969090]'}`}>
-                  <button className='flex-1 flex flex-row justify-center items-center gap-1'>
+                  <button className='flex-1 flex flex-row justify-center items-center gap-1' onClick={() => setShowShares(true)}>
                     <ReplyIcon/> 
                     <p>Share</p>
                     </button>
                 </div>
+                {showShares &&
+                  <div>
+                    <button onClick={() => setShowShares(false)} className='absolute top-[58vh] left-[72.5vw] text-[#ffff] z-10'>
+                      <CloseIcon/>
+                    </button>
+                    <ShareSocial 
+                      url ={window.location.href}
+                      socialTypes= {['facebook','twitter', 'whatsapp', 'telegram']}
+                      onSocialButtonClicked={ data => console.log(data)}
+                      style={style}
+                    />                     
+                  </div>
+                }
                 <div className={`flex flex-row w-[110px]  h-[40px] rounded-full ${theme === "light" ? 'bg-[#e9e4e4]':'bg-[#969090]'}`} onClick={handleVideoSave}>
                   <button className='flex-1 flex flex-row justify-center items-center gap-1'>
                     <BookmarksIcon/> 
