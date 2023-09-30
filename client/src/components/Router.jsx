@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router,Routes, Route } from 'react-router-dom'; 
-import VideoCards from '../pages/VideoCards';
+import HomePage from '../pages/HomePage';
 import VideoPreview from '../pages/VideoPreview';
 import SignUpPage from '../pages/SignUpPage';
 import LoginPage from '../pages/LoginPage';
@@ -12,8 +12,8 @@ const RouterPage = () => {
     <div>
         <Router>
             <Routes>
-              <Route index path='/' element={<VideoCards/>}/>
-              <Route path='/video' element={<VideoPreview/>}/>
+              <Route index path='/' element={<HomePage/>}/>
+              <Route path='/video/:id' element={<VideoPreview/>}/>
               <Route path='/user/register' element={<SignUpPage/>}/>
               <Route path='/user/signin' element={<LoginPage/>}/>
               <Route path="/video/new" element={<AddNewVideo/>} />
@@ -26,4 +26,3 @@ const RouterPage = () => {
 }
 
 export default RouterPage;
-    

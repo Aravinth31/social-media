@@ -67,7 +67,9 @@ const getVideo = async (req, res) => {
         {
             throw "Video not Found..!!"
         }
-        res.status(200).json({ video:video, status : true, message : "Video Details Fetched Successfully..!!"})
+        const user = await User.findById(video.userId);
+        const {password, ...others} = user._doc
+        res.status(200).json({ video:video, user:others,status : true, message : "Video Details Fetched Successfully..!!"})
     }
     catch(err){
         return res.status(400).json({status:false, message :err});
@@ -99,7 +101,40 @@ const getTrendingVideos = async (req, res) => {
 
 const getRandomVideos = async (req, res) => {
     try{
-        const randomVideos = await Video.aggregate([{ $sample :{size:40}}])
+        const pipeline = [
+        {
+          $sample: { size: 40 }
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userId', 
+            foreignField: '_id',
+            as: 'userDetails'
+          }
+        },
+        {
+          $project: {
+            _id: 1,
+            userId:1,
+            title: 1,
+            description: 1,
+            imgUrl:1,
+            videoUrl:1,
+            views:1,
+            tags:1,
+            likes:1,
+            dislikes:1,
+            createdAt:1,
+            'userDetails._id': 1,
+            'userDetails.name': 1,
+            'userDetails.email': 1,
+            'userDetails.img': 1,
+            'userDetails.subscribers': 1,
+          }
+        }
+      ];
+        const randomVideos = await Video.aggregate(pipeline);
         res.status(200).json({ video:randomVideos, status : true, message : "Random Videos Fetched Successfully..!!"})
     }
     catch(err){

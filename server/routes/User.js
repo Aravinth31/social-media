@@ -2,7 +2,11 @@ const express=require('express')
 var router = express.Router();
 const {verifyToken} = require('../controllers/Auth')
 
-const {signup, signin, googleAuth, deleteUser, updateUser, getUser, subscribe, unsubscribe, like, dislike} = require('../controllers/User')
+const {checkTokenExpiry, signup, signin, googleAuth, deleteUser, updateUser, getUser, subscribe, unsubscribe, like, dislike} = require('../controllers/User')
+
+
+// check user token validity
+router.get("/check-token-validity", verifyToken, checkTokenExpiry)
 
 
 // create user

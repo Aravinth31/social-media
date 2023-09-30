@@ -24,7 +24,7 @@ const UploadFile = async (file, userDetails) => {
 
     const status = await upload.then((data) => {
       console.log(data);
-      const s3Url = `https://my-you-tube.s3.amazonaws.com/${fileName}`;
+      const s3Url = `https://my-you-tube.s3.amazonaws.com/${encodeURIComponent(fileName)}`;
       return {status:true, url:s3Url};
     })
     .catch((err)=>{

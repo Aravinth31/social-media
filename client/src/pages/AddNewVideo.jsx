@@ -73,11 +73,10 @@ const AddNewVideo = () => {
       setUploadFailed(true);
       setErrorMessage("Video is required..");
     }else{
-
       let imageUpload = await UploadFile(thumbnail, userDetails);
       if(imageUpload.status === true){
         setThumbnail(imageUpload.url);
-          let videoUpload = await UploadFile(thumbnail, userDetails);
+          let videoUpload = await UploadFile(video, userDetails);
           if(videoUpload.status === true){
             setVideo(videoUpload.url);
             const body = {
@@ -99,12 +98,8 @@ const AddNewVideo = () => {
             });
   
           }
-  
-  
       }
-  
     }
-
   }
 
   return (
