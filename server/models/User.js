@@ -17,6 +17,7 @@ const UserSchema = mongoose.Schema({
   },
   img:{
     type : String,
+    default:"https://my-you-tube.s3.ap-southeast-2.amazonaws.com/default_profile_pic.png"
   },
   subscribers:{
     type : Number,

@@ -95,7 +95,7 @@ const SignUpPage = () => {
                     User validation failed🤧
                 </div>
                 <button type='submit' className='bg-[#e1d9d9] w-[80px] h-[45px]' onClick={handleSubmit}>
-                    Sign In
+                    Sign Up
                 </button>
                 <div className='text-[#6833ec] mt-10 text-[16px]'>
                     <p className='absolute left-[135px] text-[#000]'>Already have an account?</p> 

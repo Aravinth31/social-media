@@ -1,7 +1,13 @@
 const User = require('../models/User');
 const Video = require('../models/Video');
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+
+const checkTokenExpiry = async(req, res) => {
+    res.status(200).json({status : true, message : "Valid Token..!!"})
+}
+
 
 const signup = async (req,res) => {
     try{
@@ -110,9 +116,19 @@ const  getUser= async (req,res) => {
 
 const subscribe = async (req,res) => {
     try{
-        await User.findByIdAndUpdate(req.user.id, { $push : { subscribedUsers : req.params.id}})
-        await User.findByIdAndUpdate(req.params.id, { $inc : { subscribers : 1}})
-        res.status(200).json({ status : true, message : "Channel Subscribed Successfully"})
+        const checkUser = await User.findById(req.user.id);
+        if(checkUser._doc.subscribedUsers.indexOf(req.params.id) === -1){
+            const user = await User.findByIdAndUpdate(req.user.id, { $push : { subscribedUsers : req.params.id}}, {new: true})
+            const { password: userPassword, ...userOthers } = user._doc;
+            const channel = await User.findByIdAndUpdate(req.params.id, { $inc : { subscribers : 1}}, {new: true})
+            const { password: channelPassword, ...channelOthers } = channel._doc;
+            res.status(200).json({ user:userOthers, channel:channelOthers, status : true, message : "Channel Subscribed Successfully"})    
+        }else{
+            const { password: userPassword, ...userOthers } = checkUser._doc;
+            const channel = await User.findById(req.params.id);
+            const { password: channelPassword, ...channelOthers } = channel._doc;
+            res.status(200).json({ user:userOthers, channel:channelOthers, status : true, message : "Channel Subscribed Successfully"})    
+        }
     }
     catch(err)
     {
@@ -122,9 +138,20 @@ const subscribe = async (req,res) => {
 
 const unsubscribe = async (req,res) => {
     try{
-        await User.findByIdAndUpdate(req.user.id, { $pull : { subscribedUsers : req.params.id}})
-        await User.findByIdAndUpdate(req.params.id, { $inc : { subscribers : -1}})
-        res.status(200).json({ status : true, message : "Channel Unsubscribed Successfully"})
+        const checkUser = await User.findById(req.user.id);
+        if(checkUser._doc.subscribedUsers.indexOf(req.params.id) !== -1){
+            const user = await User.findByIdAndUpdate(req.user.id, { $pull : { subscribedUsers : req.params.id}}, {new: true})
+            const { password: userPassword, ...userOthers } = user._doc;
+            const channel =  await User.findByIdAndUpdate(req.params.id, { $inc : { subscribers : -1}}, {new: true})
+            const { password: channelPassword, ...channelOthers } = channel._doc;
+            res.status(200).json({ user:userOthers, channel:channelOthers, status : true, message : "Channel Unsubscribed Successfully"})    
+        }else{
+            const { password: userPassword, ...userOthers } = checkUser._doc;
+            const channel = await User.findById(req.params.id);
+            const { password: channelPassword, ...channelOthers } = channel._doc;
+            res.status(200).json({ user:userOthers, channel:channelOthers, status : true, message : "Channel Subscribed Successfully"})    
+        }
+
     }
     catch(err)
     {
@@ -134,8 +161,8 @@ const unsubscribe = async (req,res) => {
 
 const like = async (req,res) => {
     try{
-        await Video.findByIdAndUpdate(req.params.videoId , { $addToSet : {likes : req.user.id} , $pull : {dislikes : req.user.id}});
-        res.status(200).json({ status : true, message : "Video Liked Successfully"});
+        const video = await Video.findByIdAndUpdate(req.params.videoId , { $addToSet : {likes : req.user.id} , $pull : {dislikes : req.user.id}}, {new: true});
+        res.status(200).json({ video:video, status : true, message : "Video Liked Successfully"});
     }
     catch(err)
     {
@@ -145,8 +172,8 @@ const like = async (req,res) => {
 
 const dislike = async (req,res) => {
     try{
-        await Video.findByIdAndUpdate(req.params.videoId , { $addToSet : {dislikes : req.user.id} , $pull : {likes : req.user.id}});
-        res.status(200).json({ status : true, message : "Video disliked Successfully"});
+        const video = await Video.findByIdAndUpdate(req.params.videoId , { $addToSet : {dislikes : req.user.id} , $pull : {likes : req.user.id}}, {new: true});
+        res.status(200).json({ video:video, status : true, message : "Video disliked Successfully"});
     }
     catch(err)
     {
@@ -155,4 +182,4 @@ const dislike = async (req,res) => {
 }
 
 
-module.exports = {signup, signin, googleAuth, updateUser, deleteUser, getUser, subscribe, unsubscribe, like, dislike}
+module.exports = {checkTokenExpiry, signup, signin, googleAuth, updateUser, deleteUser, getUser, subscribe, unsubscribe, like, dislike}
