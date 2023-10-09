@@ -27,6 +27,12 @@ const TopBar = () => {
     window.location.href = '/user/signin';
   }
 
+  const handleInputKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   const handleSearch = () => {
     window.location.href = `/?search=${searchQuery}`
   }
@@ -46,7 +52,7 @@ const TopBar = () => {
         <div className='flex justify-center w-10/12'>
           <div className='flex gap-x-4 justify-around items-center p-0'>
             <div className='flex h-[45px] w-[500px] rounded-[20px] border-2 border-[#e4e3e3]'>
-              <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder='search' className={`w-[85%] h-full rounded-l-[20px] pl-4 focus:outline-none' ${theme === "light" ? 'text-[#080808]':'bg-[#696969] text-[#e4e3e3]'}`}/>
+              <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder='search' className={`w-[85%] h-full rounded-l-[20px] pl-4 focus:outline-none ${theme === "light" ? 'text-[#080808]':'bg-[#696969] text-[#e4e3e3]'}`} onKeyPress={handleInputKeyPress}/>
               <button className='border-l-2 border-[#e4e3e3] w-[15%] text-[#696969]' onClick={handleSearch}><SearchOutlinedIcon/></button>
             </div>
             <button className={`w-[45px] h-[45px] rounded-[30px] ${theme === "light" ? 'bg-[#cecbcb]':'text-[#ffff] bg-[#696969]'}`}><KeyboardVoiceIcon/></button>

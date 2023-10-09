@@ -29,8 +29,6 @@ const AddNewVideo = () => {
   const handleFileChange = (e) => {
     const type = e.target.getAttribute('data-type');
     const file = e.target.files[0];
-    console.log(e.target)
-    console.log("file : "+file);
     if(type === "video"){
         setVideo(file);
     }
@@ -53,7 +51,6 @@ const AddNewVideo = () => {
     }
     else if(type === "image"){
       const src = URL.createObjectURL(thumbnail);
-      console.log("src : "+src);
       previewContainer.innerHTML = `<img src=${src} alt="ara" style="display:relative; width:100%; height:100%;"/>`
     }
   }

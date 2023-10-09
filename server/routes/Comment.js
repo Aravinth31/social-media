@@ -9,7 +9,7 @@ router.post("/", verifyToken, addComment)
 
 
 // get comments of a video
-router.get("/:videoId", verifyToken, getComment)
+router.get("/:videoId", getComment)
 
 
 // delete a comment

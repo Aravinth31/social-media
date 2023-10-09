@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 
 const CommentSchema = mongoose.Schema({
   userId:{
-    type : String,
+    type : mongoose.Schema.ObjectId,
     require : true,
   },
   videoId:{
-    type : String,
+    type : mongoose.Schema.ObjectId,
     require : true,
   },
   comment:{
