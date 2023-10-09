@@ -144,7 +144,7 @@ const VideoPreview = () => {
 
 
   return (
-    <div className={`flex justify-center h-[892px] overflow-y-scroll scroll-bar pt-8 ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>
+    <div className={`flex justify-center h-[864px] overflow-y-scroll scroll-bar pt-8 ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>
       <div className='w-[1100px] h-[750px] inline-block m-10 mt-0 overflow-y-scroll scroll-bar'>
           <div className='w-full h-[630px] p-2'>
             <video controls crossOrigin="anonymous" autoPlay muted loop src={videoDetails.videoUrl} className='h-[605px] rounded-[30px] border-2 overflow-hidden'></video>

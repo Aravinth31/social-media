@@ -175,9 +175,44 @@ const getByTags = async (req, res) => {
 
 const searchVideo = async (req, res) => {
     try{
-        const query = req.query.q
-        const randomVideos = await Video.find({ title :{ $regex:query, $options: "i" }})
-        res.status(200).json({ video:randomVideos, status : true, message : "Related Videos Fetched Successfully..!!"})
+        const query = req.query.q;
+        const pipeline = [
+            {
+                $match: {
+                    title: { $regex: query, $options: "i" }
+                }
+            },
+            {
+              $lookup: {
+                from: 'users',
+                localField: 'userId', 
+                foreignField: '_id',
+                as: 'userDetails'
+              }
+            },
+            {
+              $project: {
+                _id: 1,
+                userId:1,
+                title: 1,
+                description: 1,
+                imgUrl:1,
+                videoUrl:1,
+                views:1,
+                tags:1,
+                likes:1,
+                dislikes:1,
+                createdAt:1,
+                'userDetails._id': 1,
+                'userDetails.name': 1,
+                'userDetails.email': 1,
+                'userDetails.img': 1,
+                'userDetails.subscribers': 1,
+              }
+            }
+        ];    
+          const randomVideos = await Video.aggregate(pipeline);
+          res.status(200).json({ video:randomVideos, status : true, message : "Related Videos Fetched Successfully..!!"})
     }
     catch(err){
         return res.status(400).json({status:false, message :err});
