@@ -8,13 +8,24 @@ const HomePage = () => {
   const navigate=useNavigate();
   const [allVideos, setAllVideos] = useState([]);
   const {userDetails,setUserDetails,theme,setTheme,userSignedIn,setUserSignedIn}=useContext(UserDetailsContext);
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const searchData = urlSearchParams.get("search");
+
 
   useEffect(() => {
-    Api.get('api/video/random', { withCredentials: true }).then((res)=>{
-      if(res.data.status == true){
-        setAllVideos(res.data.video)
-      }
-    });
+    if(searchData){
+      Api.get(`api/video/search?q=${searchData}`, { withCredentials: true }).then((res)=>{
+        if(res.data.status == true){
+          setAllVideos(res.data.video);
+        }
+      });  
+    }else{
+      Api.get('api/video/random', { withCredentials: true }).then((res)=>{
+        if(res.data.status == true){
+          setAllVideos(res.data.video)
+        }
+      });
+    }
   },[]);
 
   const onVideoClicked = (e) => {

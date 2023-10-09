@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import { UserDetailsContext } from '../context/UserContext';
@@ -11,6 +11,8 @@ import Cookies from 'js-cookie';
 
 const TopBar = () => {
   const {userDetails,setUserDetails,theme,setTheme,userSignedIn,setUserSignedIn}=useContext(UserDetailsContext);
+  const [searchQuery, setSearchQuery] = useState('');
+
 
   const handleLogOut = () => {
     setUserDetails(null);
@@ -23,6 +25,10 @@ const TopBar = () => {
   const handleSignIn = () => {
     localStorage.setItem('previousLocation', window.location.pathname);
     window.location.href = '/user/signin';
+  }
+
+  const handleSearch = () => {
+    window.location.href = `/?search=${searchQuery}`
   }
 
   return (
@@ -40,8 +46,8 @@ const TopBar = () => {
         <div className='flex justify-center w-10/12'>
           <div className='flex gap-x-4 justify-around items-center p-0'>
             <div className='flex h-[45px] w-[500px] rounded-[20px] border-2 border-[#e4e3e3]'>
-              <input type="text" placeholder='search' className={`w-[85%] h-full rounded-l-[20px] pl-4 focus:outline-none' ${theme === "light" ? 'text-[#080808]':'bg-[#696969] text-[#e4e3e3]'}`}/>
-              <button className='border-l-2 border-[#e4e3e3] w-[15%] text-[#696969]'><SearchOutlinedIcon/></button>
+              <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder='search' className={`w-[85%] h-full rounded-l-[20px] pl-4 focus:outline-none' ${theme === "light" ? 'text-[#080808]':'bg-[#696969] text-[#e4e3e3]'}`}/>
+              <button className='border-l-2 border-[#e4e3e3] w-[15%] text-[#696969]' onClick={handleSearch}><SearchOutlinedIcon/></button>
             </div>
             <button className={`w-[45px] h-[45px] rounded-[30px] ${theme === "light" ? 'bg-[#cecbcb]':'text-[#ffff] bg-[#696969]'}`}><KeyboardVoiceIcon/></button>
           </div>
