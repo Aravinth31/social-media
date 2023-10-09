@@ -284,7 +284,6 @@ const VideoPreview = () => {
           </div>
           {
             comments.map((comment) => {
-              console.log("-------------- comments : "+JSON.stringify(comment));
               const userData = comment.userDetails[0];
               return <UserComments
                 key={comment._id}
