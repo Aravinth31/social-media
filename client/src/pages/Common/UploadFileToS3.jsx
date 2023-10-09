@@ -4,11 +4,9 @@ import s3  from '../../config/AwsConfig';
 
 
 const UploadFile = async (file, userDetails) => {
-    console.log("nvkndfknvkfnvjk")
     const currentUserId = userDetails._id;
     const currentTime = Date.now();
     const fileName = `${currentUserId}_${currentTime}_${file.name.replace(/\s/g, "")}`;
-    console.log("fileName "+fileName);
     const params = {
       Bucket: "my-you-tube",
       Key: fileName,
@@ -23,7 +21,6 @@ const UploadFile = async (file, userDetails) => {
       }).promise();
 
     const status = await upload.then((data) => {
-      console.log(data);
       const s3Url = `https://my-you-tube.s3.amazonaws.com/${encodeURIComponent(fileName)}`;
       return {status:true, url:s3Url};
     })

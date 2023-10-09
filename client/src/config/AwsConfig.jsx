@@ -3,9 +3,6 @@ import AWS from "aws-sdk";
 const accessKey = process.env.REACT_APP_AWS_ACCESS_KEY;
 const secretKey = process.env.REACT_APP_AWS_SECRET_KEY;
 
-console.log("accessKey : "+accessKey);
-console.log("secretKey :"+secretKey);
-
 AWS.config.update({
     accessKeyId: accessKey,
     secretAccessKey: secretKey,

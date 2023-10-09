@@ -8,6 +8,7 @@ import { json, useParams } from "react-router-dom";
 import Api from './Common/Api';
 import {ShareSocial} from 'react-share-social';
 import CloseIcon from '@mui/icons-material/Close';
+import RecommendedVideos from './RecommendedVideos';
 
 
 const VideoPreview = () => {
@@ -17,6 +18,8 @@ const VideoPreview = () => {
   const [disLike, setDisLike] = useState([]);
   const [channelData, setChannelData] = useState({});
   const [showShares, setShowShares] = useState(false);
+  const [allVideos, setAllVideos] = useState([]);
+
   const {userDetails,setUserDetails,theme,setTheme,userSignedIn,setUserSignedIn}=useContext(UserDetailsContext);
 
   const style = {
@@ -42,7 +45,6 @@ const VideoPreview = () => {
   };
 
   useEffect(() => {
-    console.log('useEffect called with id:', id);
     Api.get(`api/video/find/${id}`, { withCredentials: true }).then((res)=>{
       if(res.data.status == true){
         setVideoDetails(res.data.video);
@@ -51,6 +53,13 @@ const VideoPreview = () => {
         setChannelData(res.data.user)
       }
     });
+    // Api.get('api/video/random', { withCredentials: true }).then((res)=>{
+    //   if(res.data.status == true){
+    //     setAllVideos(res.data.video)
+    //   }
+    // });
+
+    setAllVideos([1,2,3]);
     setTimeout(()=>{
       Api.put(`api/video/views/${id}`, { withCredentials: true }).then((res)=>{
         console.log("video view updtaed successfully..!!");
@@ -147,7 +156,7 @@ const VideoPreview = () => {
     <div className={`flex justify-center h-[864px] overflow-y-scroll scroll-bar pt-8 ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>
       <div className='w-[1100px] h-[750px] inline-block m-10 mt-0 overflow-y-scroll scroll-bar'>
           <div className='w-full h-[630px] p-2'>
-            <video controls crossOrigin="anonymous" autoPlay muted loop src={videoDetails.videoUrl} className='h-[605px] rounded-[30px] border-2 overflow-hidden'></video>
+            <video controls crossOrigin="anonymous" autoPlay muted loop src={videoDetails.videoUrl} className='h-[605px] w-full rounded-[30px] border-2 overflow-hidden'></video>
           </div>
           <div className='flex flex-col w-full h-[100px]'>
             <div className='flex flex-1 items-center pl-2 font-bold'>
@@ -222,72 +231,24 @@ const VideoPreview = () => {
             <hr></hr>
           </div>
       </div>
-      <div className='border-2  bg-[#e42323] inline-block w-[400px] ml-0 mt-0 m-10 h-auto overflow-y-scroll scroll-bar'>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
-            <p>recommendation</p>
+      <div className='inline-block w-[400px] ml-0 mt-0 m-10 h-auto overflow-y-scroll scroll-bar'>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+        <RecommendedVideos/>
+
+        {/* {
+          allVideos.map((video) => {
+            <RecommendedVideos/>
+          })
+        } */}
       </div>
     </div>
   )

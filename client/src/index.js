@@ -6,9 +6,7 @@ import {UserDetailsProvider} from './context/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <UserDetailsProvider>
       <App />
     </UserDetailsProvider>
-  </React.StrictMode>
 );

@@ -30,8 +30,6 @@ const HomePage = () => {
 
   const onVideoClicked = (e) => {
     const videoId = e.target.getAttribute('data-video-id');
-    console.log(e.target);
-    console.log("video clicked : " + videoId);
     navigate(`/video/${videoId}`);
   }
 
@@ -39,7 +37,6 @@ const HomePage = () => {
     <div className={`h-[91.5vh] left-[300px] p-4 pl-8 flex flex-row flex-wrap gap-x-10 gap-y-16 overflow-y-scroll scroll-bar w-[1620px] float-right ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>
       {
         allVideos.map( (video) => {
-            console.log("videos : "+JSON.stringify(video));
             const userData = video.userDetails[0];
             return <VideoCards
                 key={video._id}
