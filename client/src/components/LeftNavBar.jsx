@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useContext} from 'react';
 import { UserDetailsContext } from '../context/UserContext';
 import Api from '../pages/Common/Api';
@@ -24,6 +24,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const LeftNavBar = () => {
   const {userDetails,setUserDetails,theme,setTheme,userSignedIn,setUserSignedIn}=useContext(UserDetailsContext);
+  const [showSettingsMenu, setShowSettingsMenu]=useState(false);
 
   const updateTheme = () => {
     localStorage.setItem('previousLocation', window.location.pathname);
@@ -55,8 +56,27 @@ const LeftNavBar = () => {
     window.location.href = '/user/signin';
   }
 
+  const showUserProfile = () => {
+    localStorage.setItem('previousLocation', window.location.pathname);
+    if(userSignedIn){
+      window.location.href = '/user/profile';
+    }else{
+      window.location.href = '/user/signin';
+    }
+  }
+
+  const showVideoSettings = () => {
+    localStorage.setItem('previousLocation', window.location.pathname);
+    if(userSignedIn){
+      window.location.href = '/user/profile';
+    }else{
+      window.location.href = '/user/signin';
+    }
+  }
+
+
   return (
-    <div className={`p-2 w-[300px] inline-block ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'}`}>      
+    <div className={`p-2 w-[300px] inline-block ${theme === "light" ? 'text-[#080808]':'bg-[#080808] text-[#d4d0d0]'} border-r-2`}>      
       <div className='overflow-y-scroll scroll-bar h-[89.8vh] text-[15px]'>
 
         <div className={`block pb-4 h-[auto] cursor-pointer border-b-2 ${theme === "light" ? 'border-[#e4e3e3]':'border-[#817c7c]'}`}>
@@ -131,10 +151,20 @@ const LeftNavBar = () => {
         </div>
 
         <div className='block pt-4 pb-4 h-[auto] cursor-pointer'>
-          <div className={`flex p-2 gap-x-2 hover:rounded-[15px] hover:text-sky-700 ${theme === "light" ? 'hover:bg-[#f2f2f2]':'hover:bg-[#817c7c]'}`}>
+          <div className={`flex transition ease-in-out delay-150 hover:-translate-y-1 p-2 gap-x-2 hover:rounded-[15px] hover:text-sky-700 ${theme === "light" ? 'hover:bg-[#f2f2f2]':'hover:bg-[#817c7c]'}`} onMouseEnter={() => setShowSettingsMenu(true)} onMouseLeave={() => setShowSettingsMenu(false)}>
             <p className='w-1/4 pl-2'><SettingsIcon/></p>
             <p className='w-3/4'>Settings</p>
           </div>
+          {showSettingsMenu &&
+              <div className={`flex flex-col justify-center transition ease-in-out delay-150 hover:-translate-1 items-center absolute mt-[-50px] left-[250px] text-[#0b0b0b] w-[200px]  px-[50px] h-[150px] ${theme === "light" ? 'bg-[#e8e5e5]':'text-[#080808] bg-[#d4d0d0]'} `} onMouseEnter={() => setShowSettingsMenu(true)} onMouseLeave={() => setShowSettingsMenu(false)}>
+                <div className={`flex items-center justify-center relative w-full h-[45px] ${theme === "light" ? 'hover:bg-[#f2f2f2]':'hover:bg-[#817c7c]'}`} onClick={showUserProfile}>
+                  <p className=''>Profile</p>
+                </div>
+                <div className={`flex items-center justify-center relative w-full h-[45px] ${theme === "light" ? 'hover:bg-[#f2f2f2]':'hover:bg-[#817c7c]'}`} onClick={showVideoSettings}>
+                  <p className=''>Video Settings</p>
+                </div>
+              </div>
+          }
           <div className={`flex p-2 gap-x-2 hover:rounded-[15px] hover:text-sky-700 ${theme === "light" ? 'hover:bg-[#f2f2f2]':'hover:bg-[#817c7c]'}`}>
             <p className='w-1/4 pl-2'><FlagIcon/></p>
             <p className='w-3/4'>Report History</p>
